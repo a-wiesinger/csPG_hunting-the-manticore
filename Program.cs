@@ -20,7 +20,7 @@ Hunting the Manticore - BOSS BATTLE
     // - (if round number % 3 && 5 == 0 then dmg = 10) (Electrifyre Blast)
     // - Use different colors for the different shot types
     // - Tell the player what the upcoming damage will be
-// TODO - Get target range from player 2 ( 0 - 100 )
+// *** - Get target range from player 2 ( 0 - 100 )
     // Tell player 2 if they under or overshot
     // Resolve effect of shot (dmg resolves on Manticore possibly)
 // If Manticore still lives, the City suffers -1 HP
@@ -67,6 +67,7 @@ void GameRound()
     int cannonRange = Convert.ToInt32(Console.ReadLine());
 
     // Display if the the cannon hit or missed
+    // If hit, will then calculate damage to The Manticore
     CannonFireResult(cannonRange);
 
     // Resolve cannon fire damage
@@ -94,7 +95,7 @@ string CannonDamage(int round)
     }
 }
 
-string CannonFireResult(int range)
+void CannonFireResult(int range)
 {
     if (range < manticorePosition)
     {
@@ -107,10 +108,27 @@ string CannonFireResult(int range)
     else
     {
         Console.WriteLine($"The round was a DIRECT HIT!!");
+        ResolveManticoreDamage(CannonDamage(currentRound)); // cannon fire damage
     }
 }
 
-int GetRangeFromPlayer()
+void ResolveManticoreDamage(string cannonRound)
 {
-    // TODO
+    switch (cannonRound)
+    {
+        case "3 fire":
+            manticoreHP -= 3;
+            break;
+        case "3 electric":
+            manticoreHP -= 3;
+            break;
+        case "10 Electrifyre":
+            manticoreHP -= 10;
+            break;
+        case "1 normal":
+            manticoreHP--;
+            break;
+        default:
+            break;
+    }
 }
