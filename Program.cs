@@ -23,7 +23,7 @@ Hunting the Manticore - BOSS BATTLE
 // *** - Get target range from player 2 ( 0 - 100 )
     // Tell player 2 if they under or overshot
     // Resolve effect of shot (dmg resolves on Manticore possibly)
-// If Manticore still lives, the City suffers -1 HP
+// TODO - If Manticore still lives, the City suffers -1 HP
 // Advance to next round
 // When Manticore or City health drops to 0, the game is over
 
