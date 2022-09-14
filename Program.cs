@@ -130,16 +130,16 @@ void ResolveManticoreDamage(string cannonRound)
     switch (cannonRound)
     {
         case "3 fire":
-            manticoreHP -= 3; // TODO - Duhhhh... these should only damage if we get a hit
+            manticoreHP -= 3;
             break;
         case "3 electric":
-            manticoreHP -= 3; // TODO - Duhhhh... these should only damage if we get a hit
+            manticoreHP -= 3;
             break;
         case "10 Electrifyre":
-            manticoreHP -= 10; // TODO - Duhhhh... these should only damage if we get a hit
+            manticoreHP -= 10;
             break;
         case "1 normal":
-            manticoreHP--; // TODO - Duhhhh... these should only damage if we get a hit
+            manticoreHP--;
             break;
         default:
             break;
