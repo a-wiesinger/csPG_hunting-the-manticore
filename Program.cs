@@ -3,29 +3,7 @@ Hunting the Manticore - BOSS BATTLE
 :: Part 1 Project Capstone ::
 */
 
-// Criteria:
-//
-// *** Est. game start state with Manticore HP at 10, City at 15
-// *** Ask the first player to enter the Manticore's starting position ( 0 - 100 )
-// *** Clear screen
-// Game loop runs until either the City or the Manticore's HP drops to 0 (or below)
-// *** Before player 2's round starts, display the following:
-    // - round number
-    // - City HP
-    // - Manticore HP
-// *** Compute cannon damage:
-    // - (if round number % 3 || 5 == 0 then dmg = 3)
-        // 3 = Fire Blast
-        // 5 = Electric Blast
-    // - (if round number % 3 && 5 == 0 then dmg = 10) (Electrifyre Blast)
-    // - Use different colors for the different shot types
-    // - Tell the player what the upcoming damage will be
-// *** - Get target range from player 2 ( 0 - 100 )
-    // Tell player 2 if they under or overshot
-    // Resolve effect of shot (dmg resolves on Manticore possibly)
-// *** - If Manticore still lives, the City suffers -1 HP
-// Advance to next round
-// When Manticore or City health drops to 0, the game is over
+// See ReadMe for details
 
 Console.Title = "Hunting the Manticore";
 Console.Clear();
@@ -58,27 +36,25 @@ void GameRound()
     while (cityHP > 0 || manticoreHP > 0)
     {
         // Display round start stats
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
         Console.WriteLine("------------------------------------------------------");
         Console.WriteLine($"STATUS | Round: {currentRound} City HP: {cityHP} Manticore HP: {manticoreHP}");
+        Console.ForegroundColor = ConsoleColor.DarkGray;
 
-        // Compute cannon damage
-        Console.WriteLine($"The cannon is expected to deal {CannonDamage(currentRound)} damage this round.");
+        // Display expected cannon damage type
+        CannonDamageMessage(currentRound);
 
         // Player 2 enters the desired cannon range
         Console.Write("Please enter the desired range for the cannon: ");
         int cannonRange = Convert.ToInt32(Console.ReadLine());
 
         // Display if the the cannon hit or missed
-        // If hit, will then calculate damage to The Manticore
         CannonFireResult(cannonRange);
 
         // Resolve cannon fire damage
-        if (cannonRange == manticorePosition)
-        {
-            ResolveManticoreDamage(CannonDamage(currentRound));
-            ManticoreHealthCheck();
-            if (manticoreHP <= 0) return; // Potentially exit game loop
-        }
+        ResolveManticoreDamage(CannonDamage(currentRound), cannonRange);
+        ManticoreHealthCheck();
+        if (manticoreHP <= 0) return; // Potentially exit game loop
         
         // Resolve City HP changes
         CityHealthCheck();
@@ -88,26 +64,58 @@ void GameRound()
     }
 }
 
+// Display messaging for expected damage type
+void CannonDamageMessage(int round)
+{
+    string cannonExpectedDamagePrefix = "The cannon is expected to deal ";
+    string cannonExpectedDamageSuffix = " damage this round.";
+
+    if (round % 3 == 0 && round % 5 != 0)
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine(cannonExpectedDamagePrefix + "3 fire" + cannonExpectedDamageSuffix);
+        Console.ForegroundColor = ConsoleColor.DarkGray;
+    }
+    else if (round % 5 == 0 && round % 3 != 0)
+    {
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine(cannonExpectedDamagePrefix + "3 electric" + cannonExpectedDamageSuffix);
+        Console.ForegroundColor = ConsoleColor.DarkGray;
+    }
+    else if (round % 3 == 0 && round % 5 == 0)
+    {
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.WriteLine(cannonExpectedDamagePrefix + "10 Electrifyre" + cannonExpectedDamageSuffix);
+        Console.ForegroundColor = ConsoleColor.DarkGray;
+    }
+    else
+    {
+        Console.WriteLine(cannonExpectedDamagePrefix + "1 normal" + cannonExpectedDamageSuffix);
+    }
+}
+
+// Return damage type
 string CannonDamage(int round)
 {
     if (round % 3 == 0 && round % 5 != 0)
     {
-        return "3 fire";
+        return "fire";
     }
     else if (round % 5 == 0 && round % 3 != 0)
     {
-        return "3 electric";
+        return "electric";
     }
     else if (round % 3 == 0 && round % 5 == 0)
     {
-        return "10 Electrifyre";
+        return "electrifyre";
     }
     else
     {
-        return "1 normal";
+        return "normal";
     }
 }
 
+// Display if the cannon hit The Manticore or not
 void CannonFireResult(int range)
 {
     if (range < manticorePosition)
@@ -121,42 +129,47 @@ void CannonFireResult(int range)
     else
     {
         Console.WriteLine($"The round was a DIRECT HIT!!");
-        ResolveManticoreDamage(CannonDamage(currentRound)); // passes string cannon fire damage
     }
 }
 
-void ResolveManticoreDamage(string cannonRound)
+// Resolve damage against Manticore if direct hit
+void ResolveManticoreDamage(string cannonRound, int cannonRange)
 {
-    switch (cannonRound)
+    if (cannonRange == manticorePosition)
     {
-        case "3 fire":
-            manticoreHP -= 3;
-            break;
-        case "3 electric":
-            manticoreHP -= 3;
-            break;
-        case "10 Electrifyre":
-            manticoreHP -= 10;
-            break;
-        case "1 normal":
-            manticoreHP--;
-            break;
-        default:
-            break;
+        switch (cannonRound)
+        {
+            case "fire":
+                manticoreHP -= 3;
+                break;
+            case "electric":
+                manticoreHP -= 3;
+                break;
+            case "electrifyre":
+                manticoreHP -= 10;
+                break;
+            case "normal":
+                manticoreHP--;
+                break;
+            default:
+                break;
+        }
     }
 }
 
+// Write out victory message if Manticore is destroyed
 void ManticoreHealthCheck()
 {
-    if (manticoreHP <= 0) // Manticore health check
+    if (manticoreHP <= 0)
     {
-        Console.WriteLine("The Manticore has been destroyer! The city of Consolas has been saved!!");
+        Console.WriteLine("The Manticore has been destroyed! The city of Consolas has been saved!!");
     }
 }
 
+// City health goes down every round
 void CityHealthCheck()
 {
-    cityHP--; // Decrement by 1 every round
+    cityHP--;
     if (cityHP <= 0)
     {
         Console.WriteLine("The Manticore and Uncoded One have prevailed. Game over.");
