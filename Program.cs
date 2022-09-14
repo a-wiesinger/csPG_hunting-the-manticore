@@ -1,6 +1,6 @@
 ﻿/*
 Hunting the Manticore - BOSS BATTLE
-:: Part 1 Project Capstone ::
+:: Part 1 Project Capstone - C# Player's Guide - RB Whitaker ::
 */
 
 // See ReadMe for details
