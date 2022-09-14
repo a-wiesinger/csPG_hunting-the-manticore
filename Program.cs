@@ -73,10 +73,13 @@ void GameRound()
         CannonFireResult(cannonRange);
 
         // Resolve cannon fire damage
-        ResolveManticoreDamage(CannonDamage(currentRound));
-        ManticoreHealthCheck();
-        if (manticoreHP <= 0) return; // Potentially exit game loop
-
+        if (cannonRange == manticorePosition)
+        {
+            ResolveManticoreDamage(CannonDamage(currentRound));
+            ManticoreHealthCheck();
+            if (manticoreHP <= 0) return; // Potentially exit game loop
+        }
+        
         // Resolve City HP changes
         CityHealthCheck();
         if (cityHP <= 0) return;
