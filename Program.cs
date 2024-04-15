@@ -18,15 +18,21 @@ string targetName = "The Manticore";
 int manticorePosition;
 
 // Game start
-manticorePosition = PreGame();
+manticorePosition = SetManticorePosition();
 GameRound();
 
 // Get Manticore starting position from Player 1
-int PreGame()
+int SetManticorePosition()
 {
-    Console.Write("PLAYER ONE: Please enter the Manticore's position (0 - 100): ");
-    int position = Convert.ToInt32(Console.ReadLine());
+    // Level 14
+    // Console.Write("PLAYER ONE: Please enter the Manticore's position (0 - 100): ");
+    // int position = Convert.ToInt32(Console.ReadLine());
+    // Level 32 add
+    Random randomNumber = new Random();
+    int position = randomNumber.Next(0, 101);
+    
     Console.Clear();
+    Console.WriteLine(position);
     return position;
 }
 

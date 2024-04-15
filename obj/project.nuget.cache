@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "8rafY/oCn1ganWx+Cu89i1TjVqxs/CvCQvKLWJUHWhcwEwZ9dOPUffi72qfGfhFyYJO3hPWIh8hOK8iM8UlYlw==",
+  "dgSpecHash": "4NV2PcGKisFiLp9xF/1BucVWTpR6C8igmOtaY6uRDaxOtBTkMym5uKJ10nkCOFXNoCEoH1Fmp13c8YQhEnjuVw==",
   "success": true,
   "projectFilePath": "/Users/aaronwiesinger/Repos/Personal/cs_players_guide/020-BB-hunting-the-manticore/020_BB_huntingTheManticore.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/aaronwiesinger/.nuget/packages/microsoft.netcore.app.ref/6.0.19/microsoft.netcore.app.ref.6.0.19.nupkg.sha512",
+    "/Users/aaronwiesinger/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.19/microsoft.aspnetcore.app.ref.6.0.19.nupkg.sha512",
+    "/Users/aaronwiesinger/.nuget/packages/microsoft.netcore.app.host.osx-arm64/6.0.19/microsoft.netcore.app.host.osx-arm64.6.0.19.nupkg.sha512"
+  ],
   "logs": []
 }
